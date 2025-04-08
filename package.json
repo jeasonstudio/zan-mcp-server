@@ -1,0 +1,45 @@
+{
+	"name": "zan-mcp-server",
+	"version": "1.0.0",
+	"description": "Model Context Protocol Server for ZAN Node Service.",
+	"type": "module",
+	"exports": {
+		".": "./dist/index.js",
+		"./index.js": "./dist/index.js",
+		"./cli.js": "./dist/cli.js"
+	},
+	"scripts": {
+		"dev": "tsc --watch",
+		"build": "tsc",
+		"prepublishOnly": "npm run build",
+		"inspect": "mcp-inspector",
+		"lint": "biome format --write ."
+	},
+	"bin": {
+		"zan-mcp-server": "./dist/cli.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jeasonstudio/zan-mcp-server.git"
+	},
+	"keywords": [],
+	"author": "Jeason <me@cowpoke.cc>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/jeasonstudio/zan-mcp-server/issues"
+	},
+	"homepage": "https://github.com/jeasonstudio/zan-mcp-server#readme",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@modelcontextprotocol/inspector": "^0.8.1",
+		"@types/node": "^22.14.0",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.8.0",
+		"commander": "^13.1.0",
+		"viem": "^2.26.1",
+		"zod": "^3.24.2",
+		"zod-to-json-schema": "^3.24.5"
+	}
+}

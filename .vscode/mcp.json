@@ -1,0 +1,21 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "zan_api_key",
+      "description": "ZAN Node Service API Key",
+      "password": false
+    }
+  ],
+  "servers": {
+    "zan": {
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/dist/cli.js",
+        "stdio",
+        "--api-key",
+        "${input:zan_api_key}"
+      ]
+    }
+  }
+}
