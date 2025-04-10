@@ -11,8 +11,8 @@
     "zan": {
       "command": "node",
       "args": [
-        "${workspaceFolder}/dist/cli.js",
-        "stdio",
+        "${workspaceFolder}/dist/cli.cjs",
+        "--stdio",
         "--api-key",
         "${input:zan_api_key}"
       ]

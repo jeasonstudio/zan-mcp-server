@@ -1,5 +1,10 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { config } from "../config.js";
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { config } from '../utils/config.js';
+import { ZANContext } from '../utils/types.js';
+
+export interface SSEServerTransportOptions extends ZANContext {
+  port: number;
+}
 
 /**
  * Creates, configures, and connects the main MCP server instance.
@@ -7,10 +12,12 @@ import { config } from "../config.js";
  * available resources and tools, and establishes communication via stdio.
  *
  * @async
- * @function createMcpSSEServer
+ * @function startMcpSSEServer
  * @returns {Promise<McpServer>} A promise that resolves with the configured and connected McpServer instance.
  * @throws {Error} Throws an error if critical failures occur during registration or connection.
  */
-export const createMcpSSEServer = async (): Promise<McpServer> => {
-	throw new Error("SSE transport is not yet implemented.");
+export const startMcpSSEServer = async (
+  ctx: SSEServerTransportOptions
+): Promise<McpServer> => {
+  throw new Error('SSE transport is not yet implemented.');
 };

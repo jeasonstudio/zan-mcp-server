@@ -1,30 +1,28 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { ToolDefinition } from '../types.js';
+import { ToolDefinition, ZANContext } from '../../utils/types.js';
+import { handleError } from '../../utils/error.js';
+
 import * as getChainInfo from './get-chain-info.js';
+import * as resolveEns from './resolve-ens.js';
+import * as getSupportedNetworks from './get-supported-networks.js';
 
-const tools: ToolDefinition[] = [getChainInfo];
+const tools: ToolDefinition[] = [
+  getChainInfo,
+  resolveEns,
+  getSupportedNetworks,
+];
 
-export const registerEVMTools = (server: McpServer, apiKey: string) => {
+export const registerEVMTools = (server: McpServer, ctx: ZANContext) => {
   tools.forEach((tool) => {
     server.tool(
-      tool.name,
+      `evm_${tool.name}`,
       tool.description,
       tool.paramsSchema,
       async (args: any, extra) => {
         try {
-          return tool.handler(apiKey)(args, extra);
+          return tool.handler(ctx)(args, extra);
         } catch (error) {
-          // TODO: handle error properly
-          console.error('Error in tool handler:', error);
-          return {
-            isError: true,
-            content: [
-              {
-                type: 'text',
-                text: `Error: ${JSON.stringify(error)}`,
-              },
-            ],
-          };
+          return handleError(error);
         }
       }
     );

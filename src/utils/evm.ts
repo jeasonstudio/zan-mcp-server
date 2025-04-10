@@ -1,5 +1,7 @@
 import * as chains from 'viem/chains';
 import { z } from 'zod';
+import { ZANContext } from './types.js';
+import { createPublicClient, http } from 'viem';
 
 export const network = z
   .enum([
@@ -55,8 +57,8 @@ export const networkMap: Record<ZANNetwork, chains.Chain> = {
   'mint/mainnet': chains.mint,
 };
 
-export const getRpcUrl = (network: ZANNetwork, apiKey: string): string => {
-  return `https://api.zan.top/node/v1/${network}/${apiKey}`;
+export const getRpcUrl = (network: ZANNetwork, ctx: ZANContext): string => {
+  return `${ctx.endpoint}/node/v1/${network}/${ctx.apiKey}`;
 };
 
 export const getChainByNetwork = (network: ZANNetwork) => {
@@ -65,4 +67,13 @@ export const getChainByNetwork = (network: ZANNetwork) => {
     throw new Error(`Unsupported network: ${network}`);
   }
   return chain;
+};
+
+export const getPublicClient = (network: ZANNetwork, ctx: ZANContext) => {
+  const rpcUrl = getRpcUrl(network, ctx);
+  const chain = getChainByNetwork(network);
+  return createPublicClient({
+    chain,
+    transport: http(rpcUrl),
+  });
 };
