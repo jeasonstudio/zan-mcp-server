@@ -1,89 +1,91 @@
 # ZAN MCP Server
 
-Model Context Protocol Server for [ZAN.top](https://zan.top) 节点服务。
+[English](README.md) | [中文](README.zh-CN.md)
 
-## 简介
+Model Context Protocol Server for [ZAN.top](https://zan.top) node services.
 
-ZAN MCP Server 是一个基于 Model Context Protocol 规范开发的服务器实现，专为 ZAN.top 区块链节点服务设计。它提供了与区块链交互的各种工具和接口，使 AI 助手能够通过 MCP 协议无缝获取和处理区块链数据。
+## Introduction
 
-## 功能特点
+ZAN MCP Server is a server implementation based on the Model Context Protocol specification, specifically designed for ZAN.top blockchain node services. It provides various tools and interfaces for blockchain interaction, enabling AI assistants to seamlessly access and process blockchain data through the MCP protocol.
 
-- **多链支持**: 支持以太坊、Polygon、BSC、Arbitrum、Optimism 等多个 EVM 兼容链
-- **便捷的区块链查询**: 提供区块链信息、地址解析等功能
-- **高可靠节点服务**: 基于 ZAN.top 的高性能节点服务
-- **标准 MCP 协议**: 完全兼容 Model Context Protocol 规范
-- **可扩展架构**: 支持轻松添加新的区块链工具和服务
+## Features
 
-## 支持的区块链
+- **Multi-chain Support**: Supports multiple EVM-compatible chains including Ethereum, Polygon, BSC, Arbitrum, and Optimism
+- **Convenient Blockchain Queries**: Provides blockchain information, address resolution, and other features
+- **High-reliability Node Service**: Based on ZAN.top's high-performance node service
+- **Standard MCP Protocol**: Fully compliant with Model Context Protocol specification
+- **Extensible Architecture**: Supports easy addition of new blockchain tools and services
 
-- **以太坊**: 主网(Mainnet)、Sepolia、Holesky 测试网络
-- **BSC**: 主网、测试网
-- **Polygon**: 主网、Amoy 测试网
-- **Optimism**: 主网、Sepolia 测试网
-- **Arbitrum**: One(主网)、Sepolia 测试网
-- **其他**: Base、zkSync、Tron、Avalanche、Fantom、Taiko、Mantle
+## Supported Blockchains
 
-## 效果展示
+- **Ethereum**: Mainnet, Sepolia, Holesky test networks
+- **BSC**: Mainnet, testnet
+- **Polygon**: Mainnet, Amoy testnet
+- **Optimism**: Mainnet, Sepolia testnet
+- **Arbitrum**: One (Mainnet), Sepolia testnet
+- **Others**: Base, zkSync, Tron, Avalanche, Fantom, Taiko, Mantle
+
+## Demo
 
 ![](https://mdn.alipayobjects.com/huamei_1hrimu/afts/img/A*MmLYTIJYfEUAAAAAAAAAAAAAep95AQ/original)
 
 ## API
 
-### 资源
+### Resources
 
-- **EVM 链服务**: 提供以太坊虚拟机兼容链的各种操作接口
+- **EVM Chain Service**: Provides various operation interfaces for Ethereum Virtual Machine compatible chains
 
-### 工具
+### Tools
 
 - **evm_get_chain_info**
-  - 获取特定 EVM 网络的链信息
-  - 输入: `network` (字符串, 例如 'eth/mainnet', 'polygon/mainnet')
-  - 返回: 链 ID、名称、货币符号、RPC URLs、最新区块高度等信息
+  - Get chain information for a specific EVM network
+  - Input: `network` (string, e.g., 'eth/mainnet', 'polygon/mainnet')
+  - Returns: Chain ID, name, currency symbol, RPC URLs, latest block height, etc.
 
 - **evm_resolve_ens**
-  - 解析以太坊域名服务(ENS)
-  - 输入: `name` (字符串), `network` (可选)
-  - 返回: 对应的以太坊地址
+  - Resolve Ethereum Name Service (ENS)
+  - Input: `name` (string), `network` (optional)
+  - Returns: Corresponding Ethereum address
 
 - **evm_get_supported_networks**
-  - 获取所有支持的网络列表
-  - 无需输入参数
-  - 返回: 支持的网络列表及详情
+  - Get a list of all supported networks
+  - No input parameters required
+  - Returns: List of supported networks and details
 
 - **evm_get_contract_address**
-  - 获取已部署智能合约的地址信息
-  - 输入: `name` (字符串), `network` (可选)
-  - 返回: 合约地址及相关信息
+  - Get deployed smart contract address information
+  - Input: `name` (string), `network` (optional)
+  - Returns: Contract address and related information
 
-## 使用方法
+## Usage
 
-### 安装
+### Installation
 
 ```bash
 npm install zan-mcp-server
-# 或
+# or
 pnpm add zan-mcp-server
 ```
 
-### 使用 CLI
+### Using CLI
 
 ```bash
-# 全局安装
+# Global installation
 npm install -g zan-mcp-server
 
-# 运行服务器
+# Run server
 zan-mcp-server [options]
 ```
 
-### 使用 NPX
+### Using NPX
 
-无需安装，可以直接通过 npx 来运行：
+Run directly without installation using npx:
 
 ```bash
 npx zan-mcp-server --stdio --api-key YOUR_ZAN_API_KEY
 ```
 
-### 通过 MCP Client 设置
+### MCP Client Configuration
 
 ```json
 {
@@ -101,42 +103,42 @@ npx zan-mcp-server --stdio --api-key YOUR_ZAN_API_KEY
 }
 ```
 
-### 在项目中集成
+### Project Integration
 
 ```javascript
 import { createStdioServer } from 'zan-mcp-server';
 
-// 创建并启动服务器
+// Create and start server
 const server = createStdioServer({
-  // 配置选项
+  // Configuration options
 });
 
-// 处理服务器生命周期
+// Handle server lifecycle
 ```
 
-## 配置
+## Configuration
 
-可通过环境变量或配置文件进行设置：
+Can be set through environment variables or configuration files:
 
-- `ZAN_API_KEY`: ZAN.top API 密钥
-- `ZAN_RPC_URL`: 自定义 RPC URL (可选)
+- `ZAN_API_KEY`: ZAN.top API key
+- `ZAN_RPC_URL`: Custom RPC URL (optional)
 
-## 开发
+## Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 pnpm install
 
-# 开发模式
+# Development mode
 pnpm dev
 
-# 构建
+# Build
 pnpm build
 
-# 使用 MCP inspector 进行测试
+# Test with MCP inspector
 pnpm inspect
 ```
 
-## 许可证
+## License
 
 MIT License
