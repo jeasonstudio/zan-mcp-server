@@ -20,6 +20,10 @@ import * as verifyMessage from './verify-message.js';
 import * as verifyTypedData from './verify-typed-data.js';
 import * as getTransaction from './get-transaction.js';
 import * as getTransactionReceipt from './get-transaction-receipt.js';
+import * as signMessage from './sign-message.js';
+
+// wallet client
+import * as getAddresses from './get-addresses.js';
 
 const tools: ToolDefinition[] = [
   getChainInfo,
@@ -40,6 +44,9 @@ const tools: ToolDefinition[] = [
   verifyTypedData,
   getTransaction,
   getTransactionReceipt,
+  // wallet client
+  getAddresses,
+  signMessage,
 ];
 
 export const registerEVMTools = (server: McpServer, ctx: ZANContext) => {

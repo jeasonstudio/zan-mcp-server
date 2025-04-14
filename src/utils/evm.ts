@@ -131,15 +131,18 @@ export const getPublicClient = (network: ZANNetwork, ctx: ZANContext) => {
   });
 };
 
-export const getWalletClient = (network: ZANNetwork, ctx: ZANContext) => {
+export const getAccount = (network: ZANNetwork, ctx: ZANContext) => {
   if (!ctx.evmPrivateKey) {
     throw new Error('EVM private key is required for wallet client');
   }
+  const account = privateKeyToAccount(ctx.evmPrivateKey as `0x${string}`);
+  return account;
+};
+
+export const getWalletClient = (network: ZANNetwork, ctx: ZANContext) => {
   const rpcUrl = getRpcUrl(network, ctx);
   const chain = getChainByNetwork(network);
-  const account: any = privateKeyToAccount(ctx.evmPrivateKey as `0x${string}`);
   const client = createWalletClient({
-    account,
     chain,
     transport: http(rpcUrl),
   });
