@@ -1,5 +1,5 @@
 import { ToolHandler } from '../../utils/types.js';
-import { networkMap } from '../../utils/evm.js';
+import { jsonStringify, networkMap } from '../../utils/evm.js';
 
 export const name = 'get_supported_networks';
 
@@ -18,7 +18,7 @@ export const handler: ToolHandler<typeof paramsSchema> =
       content: [
         {
           type: 'text',
-          text: JSON.stringify(networks),
+          text: jsonStringify(networks),
         },
       ],
     };

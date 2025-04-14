@@ -1,5 +1,5 @@
 import { ToolHandler } from '../../utils/types.js';
-import { getPublicClient, network } from '../../utils/evm.js';
+import { getPublicClient, jsonStringify, network } from '../../utils/evm.js';
 import { z } from 'zod';
 import { normalize } from 'viem/ens';
 
@@ -50,7 +50,7 @@ export const handler: ToolHandler<typeof paramsSchema> =
       content: [
         {
           type: 'text',
-          text: JSON.stringify({
+          text: jsonStringify({
             ensName: normalizedEnsName,
             ensAddress,
           }),

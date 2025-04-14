@@ -1,7 +1,8 @@
 import * as chains from 'viem/chains';
 import { z } from 'zod';
 import { ZANContext } from './types.js';
-import { createPublicClient, http } from 'viem';
+import { createPublicClient, createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
 
 export const network = z
   .enum([
@@ -69,6 +70,58 @@ export const getChainByNetwork = (network: ZANNetwork) => {
   return chain;
 };
 
+/**
+ * 增强版的 JSON.stringify，支持 BigInt、Map、Set、Date 等类型的序列化
+ * @param value 要序列化的值
+ * @param space 缩进空格数或字符串
+ * @returns 序列化后的 JSON 字符串
+ */
+export const jsonStringify = (
+  value: unknown,
+  space?: number | string
+): string => {
+  return JSON.stringify(
+    value,
+    (_, val) => {
+      // 处理 BigInt 类型
+      if (typeof val === 'bigint') {
+        return val.toString();
+      }
+      // 处理 Map 类型
+      if (val instanceof Map) {
+        return {
+          __type: 'Map',
+          value: Array.from(val.entries()),
+        };
+      }
+      // 处理 Set 类型
+      if (val instanceof Set) {
+        return {
+          __type: 'Set',
+          value: Array.from(val.values()),
+        };
+      }
+      // 处理 Date 类型
+      if (val instanceof Date) {
+        return {
+          __type: 'Date',
+          value: val.toISOString(),
+        };
+      }
+      // 处理 Error 类型
+      if (val instanceof Error) {
+        return {
+          __type: 'Error',
+          message: val.message,
+          stack: val.stack,
+        };
+      }
+      return val;
+    },
+    space
+  );
+};
+
 export const getPublicClient = (network: ZANNetwork, ctx: ZANContext) => {
   const rpcUrl = getRpcUrl(network, ctx);
   const chain = getChainByNetwork(network);
@@ -76,4 +129,19 @@ export const getPublicClient = (network: ZANNetwork, ctx: ZANContext) => {
     chain,
     transport: http(rpcUrl),
   });
+};
+
+export const getWalletClient = (network: ZANNetwork, ctx: ZANContext) => {
+  if (!ctx.evmPrivateKey) {
+    throw new Error('EVM private key is required for wallet client');
+  }
+  const rpcUrl = getRpcUrl(network, ctx);
+  const chain = getChainByNetwork(network);
+  const account: any = privateKeyToAccount(ctx.evmPrivateKey as `0x${string}`);
+  const client = createWalletClient({
+    account,
+    chain,
+    transport: http(rpcUrl),
+  });
+  return client;
 };

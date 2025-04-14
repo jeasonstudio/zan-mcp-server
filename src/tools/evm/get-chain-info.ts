@@ -1,8 +1,8 @@
 import { ToolHandler } from '../../utils/types.js';
 import {
   getChainByNetwork,
-  getPublicClient,
   getRpcUrl,
+  jsonStringify,
   network,
 } from '../../utils/evm.js';
 
@@ -19,21 +19,18 @@ export const handler: ToolHandler<typeof paramsSchema> =
   async ({ network = 'eth/mainnet' }) => {
     const rpcUrl = getRpcUrl(network, context);
     const chain = getChainByNetwork(network);
-    const client = getPublicClient(network, context);
-    const blockNumber = await client.getBlockNumber();
 
     return {
       content: [
         {
           type: 'text',
-          text: JSON.stringify({
+          text: jsonStringify({
             ...chain,
             rpcUrls: {
               default: {
                 http: [rpcUrl],
               },
             },
-            latestBlockNumber: blockNumber.toString(10),
           }),
         },
       ],

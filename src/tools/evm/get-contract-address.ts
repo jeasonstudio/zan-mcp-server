@@ -1,6 +1,7 @@
 import { ToolHandler } from '../../utils/types.js';
 import { z } from 'zod';
 import { getContractAddress } from 'viem';
+import { jsonStringify } from '../../utils/evm.js';
 
 export const name = 'get_contract_address';
 
@@ -90,7 +91,7 @@ export const handler: ToolHandler<typeof paramsSchema> =
         content: [
           {
             type: 'text',
-            text: JSON.stringify({
+            text: jsonStringify({
               contractAddress: address,
             }),
           },
