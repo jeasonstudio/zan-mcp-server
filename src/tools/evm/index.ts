@@ -12,6 +12,14 @@ import * as getBalance from './get-balance.js';
 import * as getTransactionCount from './get-transaction-count.js';
 import * as getBlock from './get-block.js';
 import * as getBlockNumber from './get-block-number.js';
+import * as getBlockTransactionCount from './get-block-transaction-count.js';
+import * as call from './call.js';
+import * as estimateGas from './estimate-gas.js';
+import * as getGasPrice from './get-gas-price.js';
+import * as verifyMessage from './verify-message.js';
+import * as verifyTypedData from './verify-typed-data.js';
+import * as getTransaction from './get-transaction.js';
+import * as getTransactionReceipt from './get-transaction-receipt.js';
 
 const tools: ToolDefinition[] = [
   getChainInfo,
@@ -24,6 +32,14 @@ const tools: ToolDefinition[] = [
   getTransactionCount,
   getBlock,
   getBlockNumber,
+  getBlockTransactionCount,
+  call,
+  estimateGas,
+  getGasPrice,
+  verifyMessage,
+  verifyTypedData,
+  getTransaction,
+  getTransactionReceipt,
 ];
 
 export const registerEVMTools = (server: McpServer, ctx: ZANContext) => {
