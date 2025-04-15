@@ -21,6 +21,7 @@ import * as verifyTypedData from './verify-typed-data.js';
 import * as getTransaction from './get-transaction.js';
 import * as getTransactionReceipt from './get-transaction-receipt.js';
 import * as signMessage from './sign-message.js';
+import * as getLogs from './get-logs.js';
 
 // wallet client
 import * as getAddresses from './get-addresses.js';
@@ -44,6 +45,7 @@ const tools: ToolDefinition[] = [
   verifyTypedData,
   getTransaction,
   getTransactionReceipt,
+  getLogs,
   // wallet client
   getAddresses,
   signMessage,

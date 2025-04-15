@@ -1,7 +1,15 @@
 import * as chains from 'viem/chains';
 import { z } from 'zod';
 import { ZANContext } from './types.js';
-import { createPublicClient, createWalletClient, http } from 'viem';
+import {
+  Account,
+  createClient,
+  createPublicClient,
+  createWalletClient,
+  Hex,
+  http,
+  Transport,
+} from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 
 export const network = z
@@ -147,4 +155,85 @@ export const getWalletClient = (network: ZANNetwork, ctx: ZANContext) => {
     transport: http(rpcUrl),
   });
   return client;
+};
+
+export type ZANRPCMethods = [
+  {
+    Method: 'zan_getNFTMetadata';
+    Parameters: [address: Hex];
+    ReturnType: {
+      address: Hex;
+      authentic: boolean;
+      decimal: number;
+      ecosystem: string;
+      name: string;
+      standard: 'ERC721' | 'ERC1155';
+      symbol: string;
+    };
+  },
+  {
+    Method: 'zan_getNFTsByOwner';
+    Parameters: [
+      address: Hex,
+      tokenType: string,
+      pageSize: number,
+      pageNumber: number
+    ];
+    ReturnType: {
+      pageSize: number;
+      pageKey: number;
+      items: {
+        tokenAddress: Hex;
+        tokenId: string;
+        holderAddress: Hex;
+        addressBalance: string;
+      }[];
+    };
+  },
+  {
+    Method: 'zan_getNFTIDs';
+    Parameters: [contractAddress: Hex, topN: number];
+    ReturnType: string[];
+  }
+];
+
+export const getZANClient = (network: ZANNetwork, ctx: ZANContext) => {
+  const rpcUrl = `${ctx.endpoint}/data/v1/${network}/${ctx.apiKey}`;
+  const chain = getChainByNetwork(network);
+
+  const zanClient = createClient<
+    Transport,
+    chains.Chain,
+    Account,
+    ZANRPCMethods
+  >({
+    chain,
+    transport: http(rpcUrl),
+  }).extend((client) => ({
+    async getNFTMetadata(args: { nftContractAddress: Hex }) {
+      return client.request({
+        method: 'zan_getNFTMetadata',
+        params: [args.nftContractAddress],
+      });
+    },
+    async getNFTsByOwner(args: {
+      address: Hex;
+      tokenType: string;
+      pageSize: number;
+      pageNumber: number;
+    }) {
+      return client.request({
+        method: 'zan_getNFTsByOwner',
+        params: [args.address, args.tokenType, args.pageSize, args.pageNumber],
+      });
+    },
+    async getNFTIDs(args: { contractAddress: Hex; topN: number }) {
+      return client.request({
+        method: 'zan_getNFTIDs',
+        params: [args.contractAddress, args.topN],
+      });
+    },
+  }));
+
+  return zanClient;
 };

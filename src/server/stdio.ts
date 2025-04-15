@@ -4,6 +4,7 @@ import { config } from '../utils/config.js';
 import { registerTools } from '../tools/index.js';
 import { registerEVMResources } from '../resources/evm/index.js';
 import { ZANContext } from '../utils/types.js';
+import { registerEVMPrompts } from '../prompts/evm.js';
 
 export interface StdioServerTransportOptions extends ZANContext {}
 
@@ -42,6 +43,7 @@ export const startMcpStdioServer = async (
   // console.log('Registering resources, prompts and tools...');
   registerTools(server, ctx);
   registerEVMResources(server, ctx);
+  registerEVMPrompts(server, ctx);
 
   // Connect the server using Stdio transport
   try {

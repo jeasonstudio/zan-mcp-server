@@ -6,6 +6,10 @@ const resources: ResourceDefinition[] = [chainList];
 
 export const registerEVMResources = (server: McpServer, ctx: ZANContext) => {
   resources.forEach((resource) => {
-    server.resource(resource.name, resource.template, resource.handler(ctx));
+    server.resource(
+      `evm_${resource.name}`,
+      resource.template,
+      resource.handler(ctx)
+    );
   });
 };

@@ -23,7 +23,10 @@ program
   .option('--stdio', 'use stdio transport')
   .option('--sse', 'use http sse transport')
   .option('-p, --port', 'http sse port (only for sse)', '3000')
-  .option('--evm-private-key <private-key>', 'evm chain wallet private key')
+  .option(
+    '--evm-private-key <private-key>',
+    'evm chain wallet private key as hex string with 0x prefix'
+  )
   .option(
     '--solana-private-key <private-key>',
     'solana wallet private key as base58'
