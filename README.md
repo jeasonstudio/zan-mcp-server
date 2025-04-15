@@ -1,7 +1,5 @@
 # ZAN MCP Server
 
-[English](README.md) | [中文](README.zh-CN.md)
-
 Model Context Protocol Server for [ZAN.top](https://zan.top) node services.
 
 ## Introduction
@@ -27,65 +25,63 @@ ZAN MCP Server is a server implementation based on the Model Context Protocol sp
 
 ## Demo
 
-![](https://mdn.alipayobjects.com/huamei_1hrimu/afts/img/A*MmLYTIJYfEUAAAAAAAAAAAAAep95AQ/original)
+![zan-mcp-server-example](https://mdn.alipayobjects.com/huamei_1hrimu/afts/img/A*xXioRaISIJcAAAAAAAAAAAAAep95AQ/original)
 
 ## API
 
 ### Resources
 
-- **EVM Chain Service**: Provides various operation interfaces for Ethereum Virtual Machine compatible chains
+- **EVM Chain Service**: Provides interfaces for Ethereum Virtual Machine compatible chains
+- **Solana Chain Service**: Provides interfaces for Solana blockchain operations
+- **Advanced API Service**: Provides advanced Web3 API services
 
 ### Tools
 
-- **evm_get_chain_info**
-  - Get chain information for a specific EVM network
-  - Input: `network` (string, e.g., 'eth/mainnet', 'polygon/mainnet')
-  - Returns: Chain ID, name, currency symbol, RPC URLs, latest block height, etc.
+#### EVM Tools
 
-- **evm_resolve_ens**
-  - Resolve Ethereum Name Service (ENS)
-  - Input: `name` (string), `network` (optional)
-  - Returns: Corresponding Ethereum address
+- **evm_get_chain_info**: Get information about a specific EVM network
+- **evm_resolve_ens**: Resolve Ethereum Name Service (ENS) domains
+- **evm_get_supported_networks**: Get a list of all supported networks
+- **evm_get_contract_address**: Get deployed smart contract address information
+- **evm_get_address**: Get currently used Ethereum address
+- **evm_create_access_list**: Create an access list for a transaction
+- **evm_get_balance**: Get account balance
+- **evm_get_transaction_count**: Get the number of transactions (nonce) for an address
+- **evm_get_block**: Get block information by block number or hash
+- **evm_get_block_number**: Get the latest block number
+- **evm_get_block_transaction_count**: Get the number of transactions in a block
+- **evm_call**: Execute a smart contract call
+- **evm_estimate_gas**: Estimate gas needed for a transaction
+- **evm_get_gas_price**: Get current gas price
+- **evm_verify_message**: Verify a signed message
+- **evm_verify_typed_data**: Verify a typed data signature
+- **evm_get_transaction**: Get transaction details
+- **evm_get_transaction_receipt**: Get transaction receipt
+- **evm_get_logs**: Get logs matching specific filter criteria
+- **evm_get_addresses**: Get list of available account addresses
+- **evm_sign_message**: Sign a message
 
-- **evm_get_supported_networks**
-  - Get a list of all supported networks
-  - No input parameters required
-  - Returns: List of supported networks and details
+#### ZAN Advanced API Tools
 
-- **evm_get_contract_address**
-  - Get deployed smart contract address information
-  - Input: `name` (string), `network` (optional)
-  - Returns: Contract address and related information
+- **zan_evm_get_nft_metadata**: Get metadata for a specific NFT contract address
+- **zan_evm_get_nfts_by_owner**: Get NFTs owned by a specific wallet address
+- **zan_evm_get_nft_ids**: Get token IDs list for an NFT contract address
+
+#### Solana Tools (Under Development)
+
+Provides a series of Solana blockchain interaction tools based on Solana Agent Kit
+
+#### Other Blockchain Tools (Planned)
+
+- **Bitcoin Tools**: Bitcoin blockchain interaction tools (planned)
+- **Aptos Tools**: Aptos blockchain interaction tools (planned)  
+- **Sui Tools**: Sui blockchain interaction tools (planned)
 
 ## Usage
 
-### Installation
+### Claude Desktop
 
-```bash
-npm install zan-mcp-server
-# or
-pnpm add zan-mcp-server
-```
-
-### Using CLI
-
-```bash
-# Global installation
-npm install -g zan-mcp-server
-
-# Run server
-zan-mcp-server [options]
-```
-
-### Using NPX
-
-Run directly without installation using npx:
-
-```bash
-npx zan-mcp-server --stdio --api-key YOUR_ZAN_API_KEY
-```
-
-### MCP Client Configuration
+Add this to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -93,6 +89,7 @@ npx zan-mcp-server --stdio --api-key YOUR_ZAN_API_KEY
     "zan": {
       "command": "npx",
       "args": [
+        "-y",
         "zan-mcp-server",
         "--stdio",
         "--api-key",
@@ -102,6 +99,55 @@ npx zan-mcp-server --stdio --api-key YOUR_ZAN_API_KEY
   }
 }
 ```
+
+### Cursor
+
+```json
+{
+  "mcpServers": {
+    "zan": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "zan-mcp-server",
+        "--stdio",
+        "--api-key",
+        "<zan_api_key>"
+      ]
+    }
+  }
+}
+```
+
+### VSCode
+
+```json
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "zan_api_key",
+      "description": "ZAN Node Service API Key",
+      "password": false
+    }
+  ],
+  "servers": {
+    "zan": {
+      "command": "npx",
+      "args": [
+        "zan-mcp-server",
+        "--stdio",
+        "--api-key",
+        "${input:zan_api_key}"
+      ]
+    }
+  }
+}
+```
+
+> **Note**: For write operations (e.g., sending transactions, signing messages), you need to provide the corresponding chain's private key:
+> - For EVM chains: `--evm-private-key <private-key>`
+> - For Solana: `--solana-private-key <private-key-base58>`
 
 ### Project Integration
 
@@ -116,13 +162,6 @@ const server = createStdioServer({
 // Handle server lifecycle
 ```
 
-## Configuration
-
-Can be set through environment variables or configuration files:
-
-- `ZAN_API_KEY`: ZAN.top API key
-- `ZAN_RPC_URL`: Custom RPC URL (optional)
-
 ## Development
 
 ```bash
@@ -130,7 +169,7 @@ Can be set through environment variables or configuration files:
 pnpm install
 
 # Development mode
-pnpm dev
+pnpm dev:watch
 
 # Build
 pnpm build
@@ -141,4 +180,4 @@ pnpm inspect
 
 ## License
 
-MIT License
+[MIT License by Jeason](LICENSE)
