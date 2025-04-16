@@ -1,5 +1,10 @@
 # ZAN MCP Server
 
+[![NPM version][npm-image]][npm-url]
+
+[npm-image]: https://img.shields.io/npm/v/zan-mcp-server.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/zan-mcp-server
+
 Model Context Protocol Server for [ZAN.top](https://zan.top) node services.
 
 ## Introduction
