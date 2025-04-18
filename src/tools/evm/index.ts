@@ -2,6 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ToolDefinition, ZANContext } from '../../utils/types.js';
 import { handleError } from '../../utils/error.js';
 
+// public client
 import * as getChainInfo from './get-chain-info.js';
 import * as resolveEns from './resolve-ens.js';
 import * as getSupportedNetworks from './get-supported-networks.js';
@@ -20,13 +21,19 @@ import * as verifyMessage from './verify-message.js';
 import * as verifyTypedData from './verify-typed-data.js';
 import * as getTransaction from './get-transaction.js';
 import * as getTransactionReceipt from './get-transaction-receipt.js';
-import * as signMessage from './sign-message.js';
 import * as getLogs from './get-logs.js';
 
 // wallet client
 import * as getAddresses from './get-addresses.js';
+import * as sendRawTransaction from './send-raw-transaction.js';
+import * as sendTransaction from './send-transaction.js';
+import * as prepareTransactionRequest from './prepare-transaction-request.js';
+import * as signMessage from './sign-message.js';
+import * as signTypedData from './sign-typed-data.js';
+import * as signTransaction from './sign-transaction.js';
 
 const tools: ToolDefinition[] = [
+  // public client
   getChainInfo,
   resolveEns,
   getSupportedNetworks,
@@ -49,6 +56,11 @@ const tools: ToolDefinition[] = [
   // wallet client
   getAddresses,
   signMessage,
+  signTypedData,
+  signTransaction,
+  prepareTransactionRequest,
+  sendRawTransaction,
+  sendTransaction,
 ];
 
 export const registerEVMTools = (server: McpServer, ctx: ZANContext) => {

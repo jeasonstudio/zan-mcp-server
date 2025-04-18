@@ -30,7 +30,7 @@ ZAN MCP Server is a server implementation based on the Model Context Protocol sp
 
 ## Demo
 
-![zan-mcp-server-example](https://mdn.alipayobjects.com/huamei_1hrimu/afts/img/A*xXioRaISIJcAAAAAAAAAAAAAep95AQ/original)
+![zan-mcp-server-example](https://mdn.alipayobjects.com/huamei_1hrimu/afts/img/A*ZT1oQKizJdIAAAAAAAAAAAAAep95AQ/original)
 
 ## API
 
