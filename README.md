@@ -37,8 +37,8 @@ ZAN MCP Server is a server implementation based on the Model Context Protocol sp
 ### Resources
 
 - **EVM Chain Service**: Provides interfaces for Ethereum Virtual Machine compatible chains
-- **Solana Chain Service**: Provides interfaces for Solana blockchain operations
 - **Advanced API Service**: Provides advanced Web3 API services
+- **Solana Chain Service**: (Coming soon) Will provide interfaces for Solana blockchain operations
 
 ### Tools
 
@@ -65,6 +65,11 @@ ZAN MCP Server is a server implementation based on the Model Context Protocol sp
 - **evm_get_logs**: Get logs matching specific filter criteria
 - **evm_get_addresses**: Get list of available account addresses
 - **evm_sign_message**: Sign a message
+- **evm_sign_typed_data**: Verify a typed data signature
+- **evm_sign_transaction**: Sign a transaction without sending it
+- **evm_prepare_transaction_request**: Prepares a transaction request with gas and nonce
+- **evm_send_raw_transaction**: Send a raw, signed transaction
+- **evm_send_transaction**: Sign and send a transaction
 
 #### ZAN Advanced API Tools
 
@@ -72,12 +77,9 @@ ZAN MCP Server is a server implementation based on the Model Context Protocol sp
 - **zan_evm_get_nfts_by_owner**: Get NFTs owned by a specific wallet address
 - **zan_evm_get_nft_ids**: Get token IDs list for an NFT contract address
 
-#### Solana Tools (Under Development)
+#### Upcoming Blockchain Support
 
-Provides a series of Solana blockchain interaction tools based on Solana Agent Kit
-
-#### Other Blockchain Tools (Planned)
-
+- **Solana Tools**: Solana blockchain interaction tools (in development)
 - **Bitcoin Tools**: Bitcoin blockchain interaction tools (planned)
 - **Aptos Tools**: Aptos blockchain interaction tools (planned)  
 - **Sui Tools**: Sui blockchain interaction tools (planned)
