@@ -2,9 +2,9 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { config } from '../utils/config.js';
 import { registerTools } from '../tools/index.js';
-import { registerEVMResources } from '../resources/evm/index.js';
 import { ZANContext } from '../utils/types.js';
-import { registerEVMPrompts } from '../prompts/evm.js';
+import { registerResources } from '../resources/index.js';
+import { registerPrompts } from '../prompts/index.js';
 
 export interface StdioServerTransportOptions extends ZANContext {}
 
@@ -42,8 +42,8 @@ export const startMcpStdioServer = async (
   // TODO
   // console.log('Registering resources, prompts and tools...');
   registerTools(server, ctx);
-  registerEVMResources(server, ctx);
-  registerEVMPrompts(server, ctx);
+  registerResources(server, ctx);
+  registerPrompts(server, ctx);
 
   // Connect the server using Stdio transport
   try {

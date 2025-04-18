@@ -1,5 +1,5 @@
 import { ToolHandler } from '../../utils/types.js';
-import { getWalletClient, jsonStringify, network } from '../../utils/evm.js';
+import { getAccount, jsonStringify, network } from '../../utils/evm.js';
 
 export const name = 'get_addresses';
 
@@ -13,8 +13,7 @@ export const paramsSchema = {
 export const handler: ToolHandler<typeof paramsSchema> =
   (context) =>
   async ({ network = 'eth/mainnet' }) => {
-    const client = getWalletClient(network, context);
-    const accounts = await client.getAddresses();
+    const account = getAccount(network, context);
 
     return {
       content: [
@@ -22,7 +21,7 @@ export const handler: ToolHandler<typeof paramsSchema> =
           type: 'text',
           text: jsonStringify({
             network,
-            accounts,
+            accounts: [account.address],
           }),
         },
       ],

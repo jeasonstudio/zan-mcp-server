@@ -2,7 +2,7 @@ import { ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ResourceHandler, ZANContext } from '../../utils/types.js';
 import { jsonStringify, networkMap } from '../../utils/evm.js';
 
-export const name = 'evm_chain_list';
+export const name = 'chain_list';
 
 export const template = new ResourceTemplate('evm://chains', {
   list: undefined,
